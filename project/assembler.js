@@ -86,15 +86,17 @@ var symbolTable = {
 
 var symTop = 16 // 使用者自定義符號的開頭位址
 function addSymbol(symbol) {
-    symbolTable[symbol] = symTop;
+    symbolTable[symbol] = symTop;// 將新的變數放進 symTable 裡面
+
     symTop++;
 }
 
 // 組譯
-function assemble(asmPath, hackPath) {
+function assemble(asmPath, hackPath) {  // assemble(輸入 , 輸出) // 利用正規表達式處理
     console.log(`【彙編檔 : ${asmPath} 】`)
-    var asmFile = fs.readFileSync(asmPath, "utf-8") // 以 UTF-8 的格式讀入檔案
-    var splitedAsm = asmFile.split(/\r?\n/) // 拆成一行一行的陣列
+    var asmFile = fs.readFileSync(asmPath, "utf-8") // 以 UTF-8 的格式讀入檔案 // 讀取檔案到 text 字串中 // 第一步驟：讀檔
+    var splitedAsm = asmFile.split(/\r?\n/) // 拆成一行一行的陣列  // 將組合語言分割成一行一行 // 第二步驟：將字串拆行變陣列 // \r carriage return（回車鍵，回到頭） // \n 換行 // ? 比對前一個字元，0次或1次 // split("t") 000t111t222 --> {000, 111, 222} 以 t 分割
+
     // printAlignedDash(splitedAsm[0].length)
     // printLineNum(splitedAsm, 10, 3)
     var jsonAsm = JSON.stringify(splitedAsm, null, 2) // 轉換為 JSON 格式
@@ -102,7 +104,7 @@ function assemble(asmPath, hackPath) {
     checkType(splitedAsm)
     convert(splitedAsm, hackPath)
 }
-assemble(`${asmPath}.asm`, `${asmPath}.hack`)
+assemble(`${asmPath}.asm`, `${asmPath}.hack`) // assemble(輸入檔案為 asm 檔 , 輸出檔案為 hack 檔)
 
 // 語法解析
 function parse(asmPath, i) {
@@ -112,7 +114,7 @@ function parse(asmPath, i) {
 
     // 比對 A 指令
     else if (code.slice(0, 1) == "@") {
-        return { type: "A", argument: code.substring(1).trim() } // 由於第 0 個為 @ 符號，因此用 substring(1) 取出後面的內容
+        return { type: "A", argument: code.substring(1).trim() } // 由於第 0 個為 @ 符號，因此用 substring(1) 取出後面的內容 // 只保留 @ 後面的數字
 
     // 比對 S 指令（符號）
     } else if (code.match(/^\((\w+)\)$/)) {
