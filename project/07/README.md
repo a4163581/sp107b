@@ -1,0 +1,2 @@
+# CH7習題
+Hack檔的數據使用了上學期的nand2tetris的Assembler.bat這項工具來完成的
