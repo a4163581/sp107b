@@ -115,9 +115,9 @@ function parse(asmPath, i) {
     // 比對 A 指令
     else if (code.slice(0, 1) == "@") {
         return { type: "A", argument: code.substring(1).trim() } // 由於第 0 個為 @ 符號，因此用 substring(1) 取出後面的內容 // 只保留 @ 後面的數字
-
+//將字串去空白 
     // 比對 S 指令（符號）
-    } else if (code.match(/^\((\w+)\)$/)) {
+    } else if (code.match(/^\((\w+)\)$/)) {//正则表达式来检索字符串中的所有数字
         return { type: "S", symbol: RegExp.$1 }
 
     // 比對 C 指令
@@ -176,7 +176,7 @@ function toCode(p) {
     if (p.type === "A") {
         // 處理 A 指令的數字
         if (p.argument.match(/^\d+$/)) { // d:digit(數字)，如 @100
-            address = parseInt(p.argument); // 將字串轉換成數字(如 "100" 轉換成 100)
+            address = parseInt(p.argument); // 將字串轉換成數字(如 "100" 轉換成 100)//函式能將輸入的字串轉成整數。
         
         // 處理 Symbol 的標籤與變數
         } else {
